@@ -1,0 +1,106 @@
+h1 "Créer une règle"
+
+p {Pour créer une règle il suffit d'instancier un objet javascript.}
+
+code [title](Regle) [language](js)
+"var maRegle = {};"
+
+p {Cependant comme vous pouvez le constater cette règle est vide, et donc inutilisable en tant que tel.}
+
+p {Pour qu'une règle soit fonctionnelle elle à besoin à minima de deux propriétés:}
+
+ul 
+    li "maRegle"
+    ul 
+        li "syntaxes"
+        li "structure"
+        li "options (optionnel)"
+
+h3 "Syntaxes"
+
+p {La propriété} +q "syntaxes" -{est l'endroit où vous allez définir toutes vos règles de syntaxe, ces mêmes règles seront utilisée dans votre structure.}
+
+p {Chaque syntaxe est une propriété, les noms interdits sont} +q "include" -{et} +q "options"
+
+code [title](Syntaxe) [language](js)
+"var maRegle = {
+
+    syntaxes: {
+        string: {
+            begin:       // obligatoire (regex)
+            beginLength: // optionnel (int)
+            while:       // optionnel (regex)
+            end:         // optionnel (regex)
+            endLength:   // optionnel (int)
+            escape:      // optionnel (bool)
+        }
+    }
+
+};"
+
+p {Une syntaxe est composée de différentes options que nous allons lister.}
+
+h4 "begin"
+
+p {Begin est la seule option obligatoire pour une règle de syntaxe, il s'agit d'une expression régulière (} +a "Regex" [href](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Regular_Expressions) -{) qui correspond au début du jeton. Le nombre de caractères évalués doit strictement correspondre à} +q "beginLength"
+
+code [title](Exemple) [language](js)
+"string: {
+    begin: /('|\")/
+    // pas de beginLength si la taille de begin est de 1 charactère
+}
+string: {
+    begin: /\"\"/,
+    beginLength: 2
+}"
+
+p {Sans } +a "while" [anchor](while) -{ ni } +a "end" [anchor](end) -{ la valeur du jeton sera strictement égal à} +q "begin"
+
+h4 "while"
+
+p {While est une option qui détermine quel sont les caractères admis à l'intérieur du jeton. Le nombre de caractères évalués doit strictement correspondre à 1. Lorsqu'un caractère différent est trouvé, alors l'évaluation se termine}
+
+code [title](Exemple) [language](js)
+"string: {
+    begin: /'/,
+    while: /[^\n]/
+}"
+
+p {Dans notre exemple l'évaluation s'arrêtera après avoir rencontré un saut de ligne. La valeur retournée s'étendra donc de} +q "begin" -{à la fin de} +q "while" -{. Dans ce cas, le saut de ligne n'est pas inclus dans la valeur du jeton.}
+
+dfn {On dit que while est "non greedy" c'est à dire qu'il n'englobe pas l'expression qui fait échouer la condition.}
+
+h4 "end"
+
+p {End est une option qui agit de manière similaire à} +q "begin" -{, il s'agit de l'expression régulière qui correspond à la fin du jeton.}
+
+code [title](Exemple) [language](js)
+"string: {
+    begin: /'/,
+    end: /'/
+}"
+
+p {Dans notre exemple, comme while n'est pas spécifié, le jeton englobera tous les caractères entre} +q "begin" -{et} +q "end"
+
+code [title](Exemple) [language](js)
+"string: {
+    begin: /'/,
+    while: /[^\n]/,
+    end: /'/
+}"
+
+p {Dans l'exemple ci-dessus, si la} +q "while" -{condition n'est pas remplie alors que la fin du jeton n'est pas atteinte, cela générera une erreur de type} +q "missing-closure"
+
+h4 "escape"
+
+p {Escape est une condition qui définit si les caractères peuvent êtres échappés ou non. Si un caractère est échappé il passe outre la vérification de} +q "while" -{et} +q "end"
+
+code [title](Exemple) [language](js)
+"string: {
+    begin: /'/,
+    while: /[^\n]/,
+    end: /'/,
+    escape: true
+}
+
+'ici l\\'apostrophe peut être échapée'"

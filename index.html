@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<!-- 
+    change : <title> | <html lang="?"> | header > title | colors | footer > a[href]
+    You can use Ctrl (or CMD) + F "change" to find fields to modify 
+-->
+
+<!-- Change the lang here -->
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Change the title -->
+    <title> | TokenIt, build languages</title>
+
+    <link rel="icon" type="image/png" href="./favicon.png">
+    <link rel="stylesheet" href="./assets/read-only/workspace.css">
+    <link rel="stylesheet" href="./assets/workclass.css">
+    <link rel="stylesheet" href="./assets/components.css">
+    <link rel="stylesheet" href="./assets/styles.css">
+    <link rel="stylesheet" href="./assets/code.css">
+
+    <!-- Change colors here -->
+    <style>
+        body{
+            --change-colors-here: 0;
+            --color-60p: #ff0000;
+
+            /** Main colors var - according to UI/UX standards
+                --color-60p (this is the 60% main color)
+                --color-30p (this is the 30% main color)
+                --color-10p (this is the 10% main color)
+            
+            ** Grey colors
+                --hue (the hue position in css hsl())
+                --saturation (the saturation percentage in css hsl())
+
+            ** CodeBox colors
+                --code-hue (the hue position added to all code colors)
+                --code-text (base text code color, default: var(--color-60p))
+            */
+        }
+    </style>
+
+</head>
+<body class="ns" style="color:transparent;">
+
+    <small-dom>
+
+        # Change version (only one dot)
+        div.doc-version "0.1"
+        div.doc-loader [data-load](0)
+
+        # Global header
+        header.doc-header.mobile.mobile-flex [translate](no)
+            div.doc-header-left
+                img!.doc-site-logo [src](./logo.svg)
+                template(site_title)
+                # Change header title here
+                p.doc-site-title "TokenIt"
+                
+            div.doc-header-right.doc-color-mode
+                span.material-icons.v "light_mode"
+                span.material-icons "dark_mode"
+
+        # Global main content
+        main.doc-page
+
+            # Sidebar navigation
+            section.doc-sidebar
+
+                header.desktop.doc-header-left [translate](no)
+                    img!.doc-site-logo [src](./logo.svg)
+                    include(site_title)
+
+                nav.content.ns
+                    
+                    
+            # Main content
+            section.doc-content
+
+                header
+                    div.doc-header-left
+                        code.material-icons [data-core-marker] "search"
+                        input [type](text) [placeholder](search in files.)
+
+                    div.doc-header-right
+                        span.material-icons.mobile "menu"
+
+                div.content.ns
+
+
+            # Summary navigation
+            section.doc-summary
+
+                header.doc-color-mode.desktop.doc-header-right [translate](no)
+                    span.material-icons.v "light_mode"
+                    span.material-icons "dark_mode"
+
+                nav.content.ns
+                    
+                    div[data-core-catname]
+                        p [data-core-marker] "#"
+                        p "On this page"
+
+                    div.summary
+                    
+
+        # Global footer
+        footer.doc-footer
+        
+
+    </small-dom>
+
+<script src="./assets/read-only/workspace.js"></script>
+<script src="./assets/read-only/smallDom.js"></script>
+<script src="./assets/read-only/crimson.js"></script>
+<script>
+    smallDomReplace();
+    document.body.removeAttribute('style');
+
+    // You can change the footer text content and link but do not touch the structure
+    var footer = '<footer><a href="../">Back to site.</a><p>Back to top.</p></footer>';
+</script>
+
+<script src="./assets/read-only/scoreIt.js"></script>
+<script src="./assets/read-only/nakke.js"></script>
+
+</body>
+</html>

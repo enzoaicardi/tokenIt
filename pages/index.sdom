@@ -1,0 +1,19 @@
+h1 "TokenIt c'est quoi ?"
+
+i {TokenIt est une librairie javascript qui agit comme un tokenizer en fonction d'un ensemble de règles fixées par l'utilisateur.}
+
+p {Si tout ces concepts ne vous sont pas familliers, il faut probablement vous renseigner sur ce qu'est un compilateur, et sur ce que sont les jetons. Mais pour faire simple, TokenIt permet de reseigner un ensemble de règles syntaxiques, puis d'analyser du code en fonction de ces règles.}
+
+h2 "Exemple"
+
+code [title](Exemple de tokenisation) [language](js)
+{// Passer de :
+"var variable1 = variable2"
+// à :
+[
+    {type: "variable_declaration", value: "var"\},
+    {type: "keyword", value: "variable1"\},
+    {type: "operator", value: "="\},
+    {type: "keyword", value: "variable2"\},
+]
+// S'appel tokenisation}

@@ -1,0 +1,137 @@
+h1 "Définir une Structure"
+
+p {La propriété} +q "structure" -{est l'endroit où vous allez définir la structure que peut prendre la syntaxe. En d'autre terme la propriété} +q "structure" -{sert à définir l'organisation des jetons.}
+
+code [title](Structure) [language](js)
+"var maRegle = {
+
+    syntaxes: {
+        string: {
+            ...
+        }
+        ...
+    },
+
+    structure: {
+        string: '',
+        include: {} // optionnel
+    }
+
+};"
+
+h2 "Ajouter une Syntaxe"
+
+p {Par défaut une structure vide} +q "structure: {...}" -{ne renverra aucun jeton, même si vous avez renseigné des syntaxes. Car c'est la structure qui détermine où les syntaxes s'appliquent. Il est donc necessaire d'ajouter des syntaxes.}
+
+dfn {Comment ajouter une syntaxe ?}
+
+p {Ajouter une syntaxe est très simple, il suffit pour cela de l'ajouter en propriété de} +q "structure: {...}" -{et de lui affecter une valeur "nullish" c'est à dire une valeur qui vaut "false", on préférera utiliser la chaine vide} +q "''"
+
+code [title](Exemple) [language](js)
+"structure: {
+    string: ''
+}"
+
+p {Dans l'exemple suivant on importe la syntaxe} +q "string" -{au niveau de la racine. Cela veut dire qu'au premier niveau d'évaluation, seuls les jetons de type} +q "string" -{seront comptabilisés.}
+
+h2 "Imbriquer une syntaxe"
+
+p {Lorsque l'on cherche a créer des jetons, il est souvent necessaire de les imbriquer, on pourrait par exemple définir ce qui est entre paranthèses comme un jeton de type} +q "value" -{mais on voudrait à l'intérieur accepter les jetons de type} +q "string"
+
+p {Pour cela il suffit d'ajouter} +q "string" -{en propriété de} +q "value"
+
+code [title](Exemple) [language](js)
+"input -> \"'string' ('string dans value')\"
+structure: {
+    string: '',
+    value: {
+        string: ''
+    }
+}
+output -> [string, value [string dans value]]"
+
+p {Dans cet exemple il faut noter que si l'on enlève la première propriété "string" aucun "string" qui n'est pas inclus dans "value" ne sera enregistré.}
+
+i {Les syntaxes peuvent s'imbriquer ainsi à l'infini.}
+
+h2 "Inclure des syntaxes"
+
+p {L'imbrication des syntaxes est très pratique mais peut d'avérer, dans certains cas de figure, inadaptée ou trop redondante. Pour cette raison il peut être utile d'inclure des syntaxes depuis la} +q "include: {...}" -{propriété.}
+
+h3 "include.all"
+
+p {La} +q "all" -{propriété de} +q "include" -{permet d'inclure toutes les syntaxes existantes dans l'imbrication courante.}
+
+code [title](Exemple) [language](js)
+"// si on a les syntaxes 'value' et 'string' ...
+structure: {
+    include: {
+        all: true
+    }
+}
+// est équivalent à ...
+structure: {
+    value: '',
+    string: ''
+}"
+
+p {Il est possible d'ignorer des syntaxes en ajoutant la propriété} +q "ignore" -{à} +q "all" -{comme suit :}
+
+code [title](Exemple) [language](js)
+"structure: {
+    include: {
+        all: {
+            ignore: {string: ''}
+            // inclus tout sauf 'string'
+        }
+    }
+}"
+
+h3 "include.path"
+
+p {La} +q "path" -{propriété de} +q "include" -{permet d'inclure une structure déjà présente dans une autre.}
+
+dfn {Contrairement à "all" qui ne fait qu'ajouter des propriétés sans imbrications, "path" permet d'ajouter une structure entière depuis un chemin donné.}
+
+p +q "path" -{possède une propriété obligatoire, il s'agit de} +q "cd: [...]" -{, cette propriété définit le chemin depuis la racine pour accéder aux propriétés à inclure. Pour importer les propriétés de la racine laissez un tableau vide} +q "[]"
+
+code [title](Exemple) [language](js)
+"structure: {
+    value: {
+        keyword: '',
+        string: ''
+    },
+    include: {
+        path: {
+            cd: [\"value\"]
+        }
+    }
+}
+// est équivalent à ...
+structure: {
+    value: {
+        keyword: '',
+        string: ''
+    },
+    keyword: '',
+    string: ''
+}"
+
+p {Là aussi il est possible d'ignorer des syntaxes en ajoutant la propriété} +q "ignore"
+
+h3 "include.self"
+
+p {La} +q "self" -{propriété de} +q "include" -{permet à une structure de s'inclure elle même.}
+
+p {Ce cas est particulièrement pratique lorsque l'on souhaite une imbrication infinie d'une syntaxe en elle même.}
+
+p {Concrètement si l'on voulais que des parenthèses puissent êtres imbriquées indéfiniements les unes dans les autres il faudrait procéder comme suit :}
+
+code [title](Exemple) [language](js)
+"structure: {
+    value: {
+        include: {
+            self: true
+        }
+    }
+}"

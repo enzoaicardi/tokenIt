@@ -1,0 +1,13 @@
+h1 "La hiérarchie"
+
+p {La hiérarchie des règles de syntaxe s'applique du haut (le plus fort) vers le bas (le plus faible) selon l'ordre dans lequel apparaissent les propriétés dans les différentes structures} +q "structure: {...}"
+
+code [title](Hiérarchie) [language](js)
+"structure: {
+    value: {   // 1
+        string:  '' // 1
+        keyword: '' // 2
+    },
+    string:  '' // 2
+    keyword: '' // 3
+}"

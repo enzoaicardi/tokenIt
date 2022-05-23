@@ -1,0 +1,103 @@
+
+body{
+
+    --code-hue: 0;
+
+    --code-text: var(--color-60p);
+    
+    --code-tag: hsl(calc(var(--code-hue) + 0), 70%, 60%);
+    --code-attribute: hsl(calc(var(--code-hue) + 280), 60%, 60%);
+    --code-class: hsl(calc(var(--code-hue) + 65), 60%, 50%);
+    --code-keyword: hsl(calc(var(--code-hue) + 280), 80%, 60%);
+
+    --code-string: hsl(calc(var(--code-hue) + 30), 70%, 60%);
+
+    --code-comment: var(--color-07);
+    --code-regex: hsl(calc(var(--code-hue) + 30), 60%, 50%);
+
+    --code-function: hsl(calc(var(--code-hue) + 45), 60%, 60%);
+    --code-declaration: hsl(calc(var(--code-hue) + 190), 55%, 50%);
+
+}
+
+@supports not (color: hsl(0, calc(0% + 100%), 100%)) {
+    /* default color compatibility */
+    body {
+        --code-tag: hsl(0, 70%, 60%);
+        --code-attribute: hsl(280, 60%, 60%);
+        --code-class: hsl(65, 60%, 50%);
+        --code-keyword: hsl(280, 80%, 60%);
+        --code-string: hsl(30, 70%, 60%);
+        --code-regex: hsl(30, 60%, 50%);
+        --code-function: hsl(45, 60%, 60%);
+        --code-declaration: hsl(190, 55%, 50%);
+    }
+}
+
+/* overwrite default code color */
+.doc-table-col2 p{
+    color: var(--code-text);
+}
+
+[data-language]{
+    white-space: pre;
+}
+[data-language] > span{
+    white-space: pre;
+}
+
+/* Colors apply */
+
+[data-language] .tag{
+    color: var(--code-tag);
+}
+
+    [data-language] .tag > *{
+        color: var(--code-tag);
+    }
+
+[data-language] .keyword{
+    color: var(--code-keyword);
+}
+[data-language] .attribute{
+    color: var(--code-attribute);
+}
+[data-language] .class{
+    color: var(--code-class);
+}
+
+[data-language] .function{
+    color: var(--code-function);
+}
+    [data-language] .function > *{
+        color: var(--code-function);
+    }
+
+[data-language] .regex{
+    color: var(--code-regex);
+}
+
+[data-language] .comment{
+    font-style: italic;
+    color: var(--code-comment);
+}
+
+[data-language] .declaration{
+    color: var(--code-declaration);
+}
+
+    [data-language] .declaration > *{
+        color: var(--code-declaration);
+    }
+
+    [data-language] .declaration > .comment{
+        color: var(--code-comment);
+    }
+
+[data-language] .string{
+    color: var(--code-string);
+}
+    [data-language] .string > *{
+        color: var(--code-string);
+    }
+    

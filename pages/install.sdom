@@ -1,0 +1,6 @@
+h1 "Installation"
+
+p {Pour installer et utiliser TokenIt, } +a "téléchargez le fichier tokenIt.js" [href](./lib/tokenIt.js) [download] -{ et ajouter la balise} +q "<script>" -{correspondante à la fin de votre} +q "<body>"
+
+code [title](Installation) [language](html)
+{<script src="./tokenIt.js"></script>}
