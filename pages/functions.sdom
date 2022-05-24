@@ -1,0 +1,67 @@
+h1 "Les fonctions"
+
+p {Vous trouverez sur cette page, toutes les fonctions liées à l'utilisation de TokenIt.}
+
+h3 "tokenIt()"
+
+code [title](tokenIt) [language](js)
+"tokenIt(code, ruleName [, structureName]);"
+
+p {La fonction tokenIt permet de transformer du} +q "code" -{en entrée, en tableau de jetons. Pour ce faire il est necessaire de renseigner deux arguments.}
+
+ul
+    li "code: correspond au code que l'on veut explorer"
+    li "ruleName: correspond au nom de la " +a "règle" [page](syntax) -{ utilisée.}
+
+p {Un troisième argument (facultatif) :}
+
+ul
+    li "structureName: permet de renseigner le nom de l'objet" +q "structure" -{(par défaut } +a "structure" [page](structure) -{) qui sera utilisé.}
+    
+p {Ainsi, une règle peut posséder différentes structures pour une même syntaxe, ce qui peut s'avérer utile pour obtenir des résultats différents avec la même syntaxe.}
+
+code [title](Structures) [language](js)
+"structure: {
+    string:  '',
+    keyword: ''
+},
+otherStructure: {
+    value: ''
+}"
+
+h3 "addRule()"
+
+code [title](addRule) [language](js)
+"addRule(rule, name);"
+
+p {Cette fonction permet d'ajouter une règle à la liste des règles qui peuvent êtres utilisées par} +q "tokenIt()"
+
+ul 
+    li "rule: l'objet myRule"
+    li "name: le nom qu'on veut lui donner"
+
+h3 "deleteRule()"
+
+code [title](deleteRule) [language](js)
+"deleteRule(name);"
+
+p {Cette fonction permet supprimer une règle à la liste des règles qui peuvent êtres utilisées par} +q "tokenIt()"
+
+ul 
+    li "name: le nom de la règle à supprimer"
+
+h3 "getRule()"
+
+code [title](getRule) [language](js)
+"getRule(name);"
+
+p {Cette fonction permet d'obtenir l'objet règle de la liste des règles via son nom.}
+
+ul 
+    li "name: le nom de la règle à obtenir"
+
+p {Il est ainsi possible de réécrire une partie d'une règle, d'ajouter des éléments ou d'en supprimer.}
+
+h3 "errorIt"
+
+p {Voir } +a "les erreurs" [page](errors) -{.}

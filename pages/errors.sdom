@@ -1,0 +1,49 @@
+h1 "Gestion des erreurs"
+
+p {La gestion des erreurs peut se faire de deux manières :}
+
+ul 
+    li "externe: via la modification de la" +q "errorIt" -"fonction."
+    li "interne: via la" +q "errors:" -"propriété d'un règle."
+
+p {Une fonction d'erreur renverra 4 arguments :}
+
+code [title](errorIt) [language](js)
+"function(type, token, trace, code);"
+
+ul
+    li "type: le type d'erreur (missing-closure | unknown-token)"
+    li "token: le jeton responsable de l'erreur (renverra toujours false pour unknown-token)"
+    li "trace: la trace de l'erreur"
+    li "code: le code source"
+
+h3 "Externe"
+
+p {Pour remplacer la fonction d'erreur par défaut (dans le cas où aucune} +q "errors:" -{propriété n'est renseignée) il suffit de réécrire la fonction} +q "errorIt()" -{:}
+
+code [title](errors) [language](js)
+{function errorIt(type, token, trace, code){
+    // do something here...
+\}}
+
+h3 "Interne"
+
+p {Pour outrepasser la fonction d'erreur par défaut, renseignez la} +q "errors:" -{propriété de votre règle :}
+
+code [title](errors) [language](js)
+"var maRegle = {
+    syntaxes: {...},
+    structure: {...},
+    options: {...},
+    errors: function(type, token, trace, code){
+        // do something here...
+    }
+};"
+
+p {Il est aussi possible de réécrire, d'ajouter, ou de supprimer la} +q "errors" -{propriété via la fonction} +q "getRule()" -{.}
+
+code [title](getRule) [language](js)
+"rule = getRule('myRule');
+rule.errors = function(type, token, trace, code){
+    // do something here...
+};"

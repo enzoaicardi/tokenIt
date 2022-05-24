@@ -129,7 +129,7 @@ body > header{
     }
 
     .doc-site-logo{
-        height: 24px;
+        height: 24px !important;
     }
 
     .doc-color-mode span{

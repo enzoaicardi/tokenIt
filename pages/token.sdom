@@ -1,0 +1,72 @@
+h1 "Les jetons"
+
+p {Pour pouvoir exploiter votre tableau de jetons il est necessaire de comprendre la structure des jetons, c'est à dire la manière dont ils sont organisés en interne et en externe.}
+
+h2 "Structure d'un jeton"
+
+p {Pour commencer un jeton est un simple objet, cet objet possède des propriétés que nous allons lister :}
+
+code [title](Structure de jeton) [language](js)
+"{                           // un jeton de type string
+    type: 'string',         // le type du jeton (définit par la règle syntaxique à laquelle il renvoit)
+    role: '',               // le role du jeton, par défaut aucun role n'est attributé
+    outer: '\"un texte\"'   // le contenu englobant du jeton
+    inner: 'un texte'       // le contenu interne du jeton
+    content: [],            // le tableau des jetons imbriqués dans le jeton (tel que définit dans structure)
+    trace: {}               // la trace du jeton
+}"
+
+h3 "content: []"
+
+p {Le tableau "content" représente un tableau de jeton pour les jetons imbriqués (qui n'apparaissent donc pas dans le tableau principal). Cela veut dire que tous les jetons imbriqués sont situés dans le tableau "content" du jeton parent.}
+
+code [title](Structure de jeton -> content) [language](js)
+"{                           // un jeton de type string
+    ...                     // ...
+    content: [              // le tableau des jetons imbriqués dans le jeton (tel que définit dans structure)
+        {                   // le jeton de départ, correspondant à la valeur testée par begin
+            type: 'string',
+            role: 'begin',
+            outer: '\"',
+            ...
+        },
+
+        { ...               // le jeton de fin, correspondant à la valeur testée par end
+            role: 'end'
+        ... }
+    ],
+    ...
+}"
+
+h3 "trace: {}"
+
+p {L'objet "trace" correspond à la trace du jeton, c'est à dire à sa position dans le code.}
+
+code [title](Structure de jeton -> trace) [language](js)
+"{                           // un jeton de type string
+    ...                     // ...
+    trace: {                // la trace du jeton
+        start: {
+            index: int      // l'index de départ du jeton
+            line: int       // la ligne de départ du jeton
+            lineIndex: int  // l'index de ligne de départ du jeton
+            col: int        // le numéro de la colonne de départ du jeton
+        },
+        end: {              // contient les mêmes données mais pour la fin du jeton
+            ...
+        },
+        inner: {            // contient les mêmes données mais pour la valeur 'inner' du jeton
+            start: ...
+            end: ...
+        }
+    }
+}"
+
+h2 "Structure d'un tableau de jetons"
+
+p {La structure d'un tablea de jeton est relativement simple puisqu'il s'agit juste d'un tableau d'objets.}
+
+code [title](Tableau de jeton) [language](js)
+"var tokensArray = [ {token1}, {token2}, ... ]"
+
+p {Il faut noter que chaque jeton possède aussi sont tableau de jetons imbriqués, accessible via la propriété} +q "content"

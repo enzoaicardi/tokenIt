@@ -82,7 +82,7 @@ code [title](Exemple) [language](js)
     include: {
         all: {
             ignore: {string: ''}
-            // inclus tout sauf 'string'
+            // inclut tout sauf 'string'
         }
     }
 }"

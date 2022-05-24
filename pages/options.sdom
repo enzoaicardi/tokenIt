@@ -1,0 +1,45 @@
+h1 "Les options"
+
+p {La propriété} +q "options" -{est l'endroit où vous allez définir les options de votre règle.}
+
+code [title](Options) [language](js)
+"var maRegle = {
+
+    syntaxes: {
+        ...
+    },
+
+    structure: {
+        ...
+    },
+
+    options: {
+        defaultIgnore: true,
+        defaultError: false,
+        ignore: /regex/
+    }
+
+};"
+
+h3 "defaultIgnore"
+
+p {L'option} +q "defaultIgnore" -{ne peut prendre qu'un argument de type} +q "booléen (true|false)" -{qui vaut} +q "true" -{par défaut.}
+
+p {Tout les caractères qui ne sont pas reconnus comme des jetons sont placés dans la catégorie "default", par défaut ces derniers sont ignorés et n'apparaissent pas dans le tableau final des jetons (ce qui évite les erreurs lors de l'analyse). Il est cependant possible de les afficher en spécifiant} +q "defaultIgnore: true"
+
+h3 "defaultError"
+
+p {L'option} +q "defaultError" -{permet de définir si un caractères qui n'est pas reconnu comme un jeton doit lever ou non une erreur. Il faut noter que le caractère lévera une erreur même si le jeton est ignoré.}
+
+p {L'erreur levée est de type} +q "unknown-token"
+
+p {Il faut noter qu'aucune erreur ne sera jamais levée pour les jetons correspondants à la} + "ignore:" -{option.}
+
+h3 "ignore"
+
+p {L'option} +q "ignore" -{permet de définir quel caractère doit être ignoré et donc ne pas être passé dans le tableau des jetons. Si l'on voulait ignorer simplement les espaces et sauts de ligne seuls nous devrions procéder de la manière suivante :}
+
+code [title](Exemple) [language](js)
+"options: {
+    ignore: /\s/
+}"
